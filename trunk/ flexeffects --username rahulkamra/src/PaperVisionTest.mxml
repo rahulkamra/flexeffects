@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" xmlns:pv3dEffects="ws.tink.flex.pv3dEffects.*"
+    verticalAlign="middle" horizontalAlign="center" viewSourceURL="rotateExample/index.html" xmlns:view="org.papervision3d.core.effects.view.*" xmlns:reflector="com.rictus.reflector.*" xmlns:dragpanel="com.rictus.dragpanel.*" >
+    <mx:Button label="Button" click="test()"/>
+    
+    
+    
+    
+    <mx:Script>
+    	<![CDATA[
+    		import mx.formatters.SwitchSymbolFormatter;
+    		import mx.controls.Alert;
+    		import mx.collections.ArrayCollection;
+    		import mx.events.EffectEvent;
+    		import mx.effects.effectClasses.HideShowEffectTargetFilter;
+    		public var count:int=2;
+    		public function test():void{
+    			
+    			var effect:int=Math.abs(Math.random()*3);
+               switch(effect){
+               	case 0: firstEffectStart();break;
+               	case 1: secondEffectStart();break;
+               	case 2: thirdEffectStart();break;
+               	default : Alert.show("Error ");
+               }
+    			
+    			 
+    		 
+    		}
+    		
+    		public function firstEffectStart():void{
+    			//Alert.show("a");
+    			hideZoom.play([hbox]);
+    		     hideZoom.addEventListener(EffectEvent.EFFECT_END,firstEffectEnd);
+    		     while(count<7){
+    		     	 image.source="images/" +count +".jpg"
+    		     	 count++;
+    		     	 if(count==7){
+    		     	 	count=1;
+    		     	 }
+    		     	
+    		     	 break;
+    		     } 
+    			
+    		}
+    		public function firstEffectEnd(event:EffectEvent):void{
+    			showZoom.play([image]);
+    		}
+    		
+    		public function secondEffectStart():void{
+    			hideFlip.play([hbox]);
+    		     hideFlip.addEventListener(EffectEvent.EFFECT_END,secondEffectEnd);
+    		     while(count<7){
+    		     	 image.source="images/" +count +".jpg"
+    		     	 count++;
+    		     	 if(count==7){
+    		     	 	count=1;
+    		     	 }
+    		     	
+    		     	 break;
+    		     } 
+    			
+    		}
+    		public function secondEffectEnd(event:EffectEvent):void{
+    			showFlip.play([image]);
+    		}
+    		public function thirdEffectStart():void{
+    			hideRotate.play([hbox]);
+    		     hideRotate.addEventListener(EffectEvent.EFFECT_END,thirdEffectEnd);
+    		     while(count<7){
+    		     	 image.source="images/" +count +".jpg"
+    		     	 count++;
+    		     	 if(count==7){
+    		     	 	count=1;
+    		     	 }
+    		     	
+    		     	 break;
+    		     } 
+    			
+    		}
+    		public function thirdEffectEnd(event:EffectEvent):void{
+    			showRotate.play([image]);
+    		}
+    	]]>
+    </mx:Script>
+    
+    
+    <pv3dEffects:Zoom id="showZoom" rotationXFrom="-450" rotationXTo="0" alphaFrom="0" alphaTo="1" scaleFrom="0" scaleTo="1" duration="1000"/>
+    <pv3dEffects:Zoom id="hideZoom" rotationXFrom="0" rotationXTo="450" alphaFrom="1" alphaTo="0" scaleFrom="1" scaleTo="0" duration="1000"/>
+    <pv3dEffects:Flip id="hideFlip" constrain="true" type="hide" direction="left" duration="250"/>
+    <pv3dEffects:Flip id="showFlip" constrain="true" type="show" direction="left" duration="250"/>
+    <pv3dEffects:Rotate id="hideRotate" rotationXFrom="0" rotationXTo="450" rotationZFrom="0" rotationZTo="180" duration="1000"/>
+    <pv3dEffects:Rotate id="showRotate" rotationXFrom="-450" rotationXTo="0" duration="1000"/>
+    
+
+
+
+<reflector:Reflector id="firstReflector" target="{image}"/>
+<dragpanel:DragPanel id="panel" width="280" height="112" layout="absolute" title="Live Reflection Panel - Drag Me"
+color="#FFFFFF" horizontalCenter="1" verticalCenter="0">
+        <mx:HBox width="442" height="335" hideEffect="hideZoom" showEffect="showZoom" id="hbox">
+                <mx:Image width="100%" height="334" source="\images\1.jpg" id="image" autoLoad="true"/>
+        </mx:HBox>
+   </dragpanel:DragPanel>
+   
+</mx:Application>
